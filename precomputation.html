@@ -1,0 +1,71 @@
+<html>
+  <head>
+    <title>JavaScript Performance Tests</title>
+
+
+<script language="JavaScript" type="text/javascript" src="Prime/jsbn-ec.js"></script>
+<script language="JavaScript" type="text/javascript" src="Prime/jsbn2-ec.js"></script>
+<script language="JavaScript" type="text/javascript" src="Binary/BinaryScalar.js"></script>
+<script language="JavaScript" type="text/javascript" src="OEF/OEF.js"></script>
+<script language="JavaScript" type="text/javascript" src="ECC/eccunique.js"></script>
+
+<script language="JavaScript" type="text/javascript" src="tests/testPrimes.js"></script>
+<script language="JavaScript" type="text/javascript" src="tests/testBinary.js"></script>
+<script language="JavaScript" type="text/javascript" src="tests/testOEF.js"></script>
+<script language="JavaScript" type="text/javascript" src="tests/testECCP.js"></script>
+<script language="JavaScript" type="text/javascript" src="tests/testECCOEF.js"></script>
+<script language="JavaScript">
+<!--
+
+function do_init() {
+document.votingtest.x.value=new BigInteger('15022218326251922240529090945393257414013962585837380057002596799641');
+document.votingtest.y.value=new BigInteger('24039939147593575364998439277103263076917813793017813680357106378307');
+document.votingtest.b.value=new BigInteger('16718900807587580749027274601603983259348067752797708411830585764552');
+document.votingtest.increment.value=new BigInteger('1412');
+document.votingtest.w.value=8;
+}
+
+
+function precompute_from_param() {
+var p28 = BigInteger.ONE.shiftLeft(224).add(BigInteger.ONE.shiftLeft(140)).add(BigInteger.ONE.shiftLeft(56)).add(BigInteger.ONE);
+var a=new BigInteger('-3');
+var x=new BigInteger(document.votingtest.x.value).add(new BigInteger(document.votingtest.increment.value));
+var y=new BigInteger(document.votingtest.y.value);
+var b=new BigInteger(document.votingtest.b.value);
+
+var w=document.votingtest.w.value;
+var k=randBigInt(100).mod(p28);
+var P=new ecPoint([x,y],'curve','affine','prime',p28,false);
+var start=new Date();
+var precomp=precomputeComb2(k,P,parseInt(w));
+var stop=new Date();
+displayPrecompP(precomp);
+document.write("\<br>" + 'elapsed time : ' + (stop-start) + 'ms');
+}
+
+
+
+
+//-->
+</script>
+  </head>
+
+  <body onLoad='do_init();'>
+    <h1>Precomputation</h1>
+
+<form name="votingtest" onSubmit='return false;'>
+    
+p = 26959946667150639794667016480816205581801090768523036579220242300929 <br>
+a = -3<br>
+b = <td><input name="b" type="text" value="" size=100></td><br>
+c = <td><input name="c" type="text" value="not involved in precomputation" size=100></td><br>
+x = <td><input name="x" type="text" value="" size=100></td> + <td><input name="increment" type="text" value="" size=20></td><br>
+y = <td><input name="y" type="text" value="" size=100></td><br>
+w = <td><input name="w" type="text" value="" size=5></td><br>
+<input type="button" value="precompute" onClick="precompute_from_param();">
+
+
+<tr>
+<td>
+  </body>
+</html>

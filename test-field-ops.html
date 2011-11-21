@@ -1,0 +1,153 @@
+<html>
+  <head>
+    <title>JavaScript Performance Tests</title>
+
+
+<script language="JavaScript" type="text/javascript" src="Prime/jsbn-ec.js"></script>
+<script language="JavaScript" type="text/javascript" src="Prime/jsbn2-ec.js"></script>
+<script language="JavaScript" type="text/javascript" src="Binary/BinaryScalar.js"></script>
+<script language="JavaScript" type="text/javascript" src="OEF/OEF.js"></script>
+<script language="JavaScript" type="text/javascript" src="ECC/eccunique.js"></script>
+
+<script language="JavaScript" type="text/javascript" src="tests/testPrimes.js"></script>
+<script language="JavaScript" type="text/javascript" src="tests/testBinary.js"></script>
+<script language="JavaScript" type="text/javascript" src="tests/testOEF.js"></script>
+<script language="JavaScript" type="text/javascript" src="tests/testECCP.js"></script>
+<script language="JavaScript" type="text/javascript" src="tests/testECCOEF.js"></script>
+<script language="JavaScript">
+<!--
+
+function do_init() {
+
+}
+
+
+function do_test_fieldArithmetic(tt){
+document.votingtest.addprime.value =testadd(tt*2000);
+document.votingtest.multprime.value =testmult(tt*200);
+document.votingtest.squareprime.value =testsquaring(tt*200);
+document.votingtest.redprime.value =testred(tt*2000);
+document.votingtest.invprime.value =testinv(tt);
+
+document.votingtest.addbin.value =testaddbin(tt*2000);
+document.votingtest.multbin.value =testmultbin(tt*20);
+document.votingtest.squarebin.value =testsquaringbin(tt*200);
+document.votingtest.redbin.value =testredbin(tt*200);
+document.votingtest.invbin.value =testinvbin(tt);
+
+document.votingtest.addOEF.value =testaddOEF(tt*2000);
+document.votingtest.multOEF.value =testmultOEF(tt*200);
+document.votingtest.squareOEF.value =testsquaringOEF(tt*200);
+document.votingtest.redOEF.value ='-';
+document.votingtest.invOEF.value =testinvOEF(tt*20);
+}
+
+function do_test_ECArithmetic(tt){
+document.votingtest.pointaddprime.value =testpointaddprime(tt*40);
+document.votingtest.pointdoublingprime.value =testpointdoublingprime(tt*40);
+document.votingtest.pointmultprime.value =testpointmultprime(tt);
+
+document.votingtest.pointaddOEF.value =testpointaddOEF(tt*40);
+document.votingtest.pointdoublingOEF.value =testpointdoublingOEF(tt*40);
+document.votingtest.pointmultOEF.value =testpointmultOEF(tt);
+
+}
+
+
+
+
+
+//-->
+</script>
+  </head>
+
+  <body onLoad='do_init();'>
+    <h1>JavaScript Performance Tests</h1>
+
+<form name="votingtest" onSubmit='return false;'>
+    
+    Finite Fields Arithmetic (times in microseconds)<br><br>
+    <input type="button" value="test (short)" onClick="do_test_fieldArithmetic(5);">
+    <input type="button" value="test (long)" onClick="do_test_fieldArithmetic(40);">
+    <input type="button" value="test (very long)" onClick="do_test_fieldArithmetic(80);"><p>
+    
+    <table>
+    <thead>
+    <tr>
+    <th></th>
+    <th>Prime Fields </th>
+    <th>Binary Fields</th>
+    <th>OEF</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+    <th>Addition</th>
+    <td><input name="addprime" type="text" value="" size=15></td>
+    <td><input name="addbin" type="text" value="" size=15></td>
+    <td><input name="addOEF" type="text" value="" size=15></td>
+    </tr>
+    <tr>
+    <th>Multiplication</th>
+    <td><input name="multprime" type="text" value="" size=15></td>
+    <td><input name="multbin" type="text" value="" size=15></td>
+    <td><input name="multOEF" type="text" value="" size=15></td>
+    </tr>
+    <tr>
+    <th>Squaring</th>
+    <td><input name="squareprime" type="text" value="" size=15></td>
+    <td><input name="squarebin" type="text" value="" size=15></td>
+    <td><input name="squareOEF" type="text" value="" size=15></td>
+    </tr>
+    <tr>
+    <th>Reduction</th>
+    <td><input name="redprime" type="text" value="" size=15></td>
+    <td><input name="redbin" type="text" value="" size=15></td>
+    <td><input name="redOEF" type="text" value="" size=15></td>
+    </tr>
+    <tr>
+    <th>Inversion</th>
+    <td><input name="invprime" type="text" value="" size=15></td>
+    <td><input name="invbin" type="text" value="" size=15></td>
+    <td><input name="invOEF" type="text" value="" size=15></td>
+    </tr>
+    </tbody>
+    </table>
+    <br><br>
+Elliptic Curves Arithmetic (times in microseconds)<br><br>
+    <input type="button" value="test (short)" onClick="do_test_ECArithmetic(10);">
+    <input type="button" value="test (long)" onClick="do_test_ECArithmetic(50);">
+    <input type="button" value="test (very long)" onClick="do_test_ECArithmetic(100);"><p>
+    
+    <table>
+    <thead>
+    <tr>
+    <th></th>
+    <th>Prime Fields </th>
+    <th>OEF</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+    <th>Addition</th>
+    <td><input name="pointaddprime" type="text" value="" size=15></td>
+    <td><input name="pointaddOEF" type="text" value="" size=15></td>
+    </tr>
+    <tr>
+    <th>Doubling</th>
+    <td><input name="pointdoublingprime" type="text" value="" size=15></td>
+    <td><input name="pointdoublingOEF" type="text" value="" size=15></td>
+    </tr>
+    <tr>
+    <th>Multiplication</th>
+    <td><input name="pointmultprime" type="text" value="" size=15></td>
+    <td><input name="pointmultOEF" type="text" value="" size=15></td>
+    </tr>
+    </tbody>
+    </table>
+
+
+<tr>
+<td>
+  </body>
+</html>

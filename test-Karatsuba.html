@@ -1,0 +1,80 @@
+<html>
+<head>
+<script language="JavaScript" type="text/javascript" src="Prime/jsbn-ec.js"></script>
+<script language="JavaScript" type="text/javascript" src="Prime/jsbn2-ec.js"></script>
+<script language="JavaScript" type="text/javascript" src="OEF/OEF.js"></script>
+<script language="JavaScript" type="text/javascript" src="ECC/eccunique.js"></script>
+
+<title>Test the am's functions</title>
+</head>
+
+<body>
+<script type="text/javascript">
+
+
+function randBigIntBit(n){return randBigInt(Math.round(n/3)).mod(BigInteger.ONE.shiftLeft(n-1));}
+//-----------------------------------------------------------------------------------------------------
+var sizemin=200;
+var sizestep=100;
+var sizemax=2000;
+var nb=50;
+
+
+document.write('sizeint=[');
+for(var sizeint=sizemin;sizeint<sizemax;sizeint+=sizestep){document.write(sizeint+',')}
+document.write(sizemax+"];"+"<br/>");
+
+document.write('karat=[')
+for(var sizeint=sizemin;sizeint<=sizemax;sizeint+=sizestep){
+var x=new Array();
+for(var j=0;j<11;j++){x[j]=randBigIntBit(sizeint);}
+var start=new Date().getTime();
+for(var i=nb;i;i--){
+	var z=bnKaratsuba(x[0],x[1]);
+	var z=bnKaratsuba(x[1],x[2]);
+	var z=bnKaratsuba(x[2],x[3]);
+	var z=bnKaratsuba(x[3],x[4]);
+	var z=bnKaratsuba(x[4],x[5]);
+	var z=bnKaratsuba(x[5],x[6]);
+	var z=bnKaratsuba(x[6],x[7]);
+	var z=bnKaratsuba(x[7],x[8]);
+	var z=bnKaratsuba(x[8],x[9]);
+	var z=bnKaratsuba(x[9],x[10]);
+		}
+var end=new Date().getTime();
+document.write((end-start)/(nb*10));
+if(sizeint==sizemax){document.write('];');}else{document.write(',');}
+}
+document.write("<br/>");
+
+
+document.write('class=[')
+for(var sizeint=sizemin;sizeint<=sizemax;sizeint+=sizestep){
+var x=new Array();
+for(var j=0;j<11;j++){x[j]=randBigIntBit(sizeint);}
+var start=new Date().getTime();
+for(var i=nb;i;i--){
+	var z=x[0].multiply(x[1]);
+	var z=x[1].multiply(x[2]);
+	var z=x[2].multiply(x[3]);
+	var z=x[3].multiply(x[4]);
+	var z=x[4].multiply(x[5]);
+	var z=x[5].multiply(x[6]);
+	var z=x[6].multiply(x[7]);
+	var z=x[7].multiply(x[8]);
+	var z=x[8].multiply(x[9]);
+	var z=x[9].multiply(x[10]);
+		}
+var end=new Date().getTime();
+document.write((end-start)/(nb*10));
+if(sizeint==sizemax){document.write('];');}else{document.write(',');}
+}
+document.write("<br/>");
+document.write("plot(sizeint,karat,sizeint,class);");
+
+</script>
+</script>
+</script>
+
+</body>
+</html>
