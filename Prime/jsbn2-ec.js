@@ -1,15 +1,15 @@
-// This file is a fork of the jsbn2.js file by Tom Wu (see below). 
+// This file is a fork of the jsbn2.js file by Tom Wu (see below).
 
 // It is released under the GPL v3 or later.
-// Copyright (c) 2011  Laurie Haustenne, Quentin De Neyer, Olivier Pereira 
-// (Universite catholique de Louvain). 
+// Copyright (c) 2011 Laurie Haustenne, Quentin De Neyer, Olivier Pereira
+// (Universite catholique de Louvain).
 //
-// Original jsbn2.js file: 
-// Copyright (c) 2005-2009  Tom Wu
+// Original jsbn2.js file:
+// Copyright (c) 2005-2009 Tom Wu
 // See "LICENSE-JSBN" for details on original file.
 
 // Extended JavaScript BN functions, required for RSA private ops.
-// Also includes: 
+// Also includes:
 // -- efficient operations mod 2^224 + 2^140 + 2^56 + 1
 
 // Version 1.1: new BigInteger("0", 10) returns "proper" zero
@@ -94,7 +94,7 @@ function bnpFromNumber(a,b,c) {
     if(a < 2) this.fromInt(1);
     else {
       this.fromNumber(a,c);
-      if(!this.testBit(a-1))	// force MSB set
+      if(!this.testBit(a-1)) // force MSB set
         this.bitwiseTo(BigInteger.ONE.shiftLeft(a-1),op_or,this);
       if(this.isEven()) this.dAddOffset(1,0); // force odd
       while(!this.isProbablePrime(b)) {
@@ -257,59 +257,6 @@ function bnClearBit(n) { return this.changeBit(n,op_andnot); }
 // (public) this ^ (1<<n)
 function bnFlipBit(n) { return this.changeBit(n,op_xor); }
 
-//------------------------------------------------------------------------------
-function bnpAddTo2(b,r) {
-	// requires this and b <= 8 words
-	var a,c,c7,i;
-	for(i=b.t;i<8;i++)b.arr[i]=0;
-	for(i=this.t;i<8;i++)this.arr[i]=0;
-	a=this.arr[7]+b.arr[7];
-	c7=a>>28;
-	r.arr[7]=a&0xfffffff;
-	a=this.arr[0]+b.arr[0]-c7;
-	c=a>>28;
-	r.arr[0]=a&0xfffffff;
-	a=this.arr[1]+b.arr[1]+c;
-	c=a>>28;
-	r.arr[1]=a&0xfffffff;
-	a=this.arr[2]+b.arr[2]+c-c7;
-	c=a>>28;
-	r.arr[2]=a&0xfffffff;
-	a=this.arr[3]+b.arr[3]+c;
-	c=a>>28;
-	r.arr[3]=a&0xfffffff;
-	a=this.arr[4]+b.arr[4]+c;
-	c=a>>28;
-	r.arr[4]=a&0xfffffff;
-	a=this.arr[5]+b.arr[5]+c-c7;
-	c=a>>28;
-	r.arr[5]=a&0xfffffff;
-	a=this.arr[6]+b.arr[6]+c;
-	c=a>>28;
-	r.arr[6]=a&0xfffffff;
-	r.arr[7]+=c;
-	if(r.arr[7]>>28){r=nbi();this.addTo(a,r);}
-	r.s=0;
-	r.t=8;
-	}
-
-function bnpAddTo3(a,b,c,r1,r2,r3) {
-	var i=0;
-	while(i<a.t){
-		r.arr[i]=this.arr[i]+a.arr[i];
-		i++;
-		}
-	while(i<this.t){
-		r.arr[i]=this.arr[i];
-		i++;
-		}
-		r.t=i;
-		r.s=0;
-		//r.clamp();
-		
-	}
-//----------------------------------------------------------------------------------
-
 // (protected) r = this + a
 function bnpAddTo(a,r) {
   var i = 0, c = 0, m = Math.min(a.t,this.t);
@@ -346,14 +293,8 @@ function bnpAddTo(a,r) {
 // (public) this + a
 function bnAdd(a) { var r = nbi(); this.addTo(a,r); return r; }
 
-//---------------------------------------------------------------------------------------
-function bnAdd2(a) { var r = nbi(); this.addTo2(a,r); return r; }
-function bnAdd3(a,b,c) { var r1,r2,r3; r1= nbi();r2=nbi();r3=nbi(); this.addTo3(a,b,c,r1,r2,r3); }
-//---------------------------------------------------------------------------------------
-
 // (public) this - a
 function bnSubtract(a) { var r = nbi(); this.subTo(a,r); return r; }
-function bnSubtract2(a) { var r = nbi(); this.subTo2(a,r); return r; }
 
 // (public) this * a
 function bnMultiply(a) { var r = nbi(); this.multiplyTo(a,r); return r; }
@@ -512,7 +453,7 @@ function bnModPow(e,m) {
     n = k;
     while((w&1) == 0) { w >>= 1; --n; }
     if((i -= n) < 0) { i += this.DB; --j; }
-    if(is1) {	// ret == 1, don't bother squaring or multiplying it
+    if(is1) { // ret == 1, don't bother squaring or multiplying it
       g[w].copyTo(r);
       is1 = false;
     }
@@ -664,7 +605,6 @@ BigInteger.prototype.fromNumber = bnpFromNumber;
 BigInteger.prototype.bitwiseTo = bnpBitwiseTo;
 BigInteger.prototype.changeBit = bnpChangeBit;
 BigInteger.prototype.addTo = bnpAddTo;
-BigInteger.prototype.addTo2 = bnpAddTo2;
 
 BigInteger.prototype.dMultiply = bnpDMultiply;
 BigInteger.prototype.dAddOffset = bnpDAddOffset;
@@ -697,9 +637,7 @@ BigInteger.prototype.setBit = bnSetBit;
 BigInteger.prototype.clearBit = bnClearBit;
 BigInteger.prototype.flipBit = bnFlipBit;
 BigInteger.prototype.add = bnAdd;
-BigInteger.prototype.add2 = bnAdd2;
 BigInteger.prototype.subtract = bnSubtract;
-BigInteger.prototype.subtract2 = bnSubtract2;
 BigInteger.prototype.multiply = bnMultiply;
 BigInteger.prototype.divide = bnDivide;
 BigInteger.prototype.remainder = bnRemainder;
