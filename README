@@ -1,6 +1,6 @@
 FFCrypto-js: Finite Field operations for fast cryptography in JavaScript
 
-This code is provided for testing purpose. 
+See IACR ePrint <http://eprint.iacr.org/2011/654> for more information, or open the test-field-ops.html file in a browser for testing!
 
 This code is released under GPV v3 or later (see LICENSE file for details). 
 

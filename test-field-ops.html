@@ -62,11 +62,17 @@ document.votingtest.pointmultOEF.value =testpointmultOEF(tt);
   </head>
 
   <body onLoad='do_init();'>
+
     <h1>JavaScript Performance Tests</h1>
+
+    The operations that can be tested on this page are described in
+    the report
+    <a href="http://eprint.iacr.org/2011/654/" target="_blank">http://eprint.iacr.org/2011/654</a>.
+
 
 <form name="votingtest" onSubmit='return false;'>
     
-    Finite Fields Arithmetic (times in microseconds)<br><br>
+    <h2>Finite Fields Arithmetic (times in microseconds)</h2>
     <input type="button" value="test (short)" onClick="do_test_fieldArithmetic(5);">
     <input type="button" value="test (long)" onClick="do_test_fieldArithmetic(40);">
     <input type="button" value="test (very long)" onClick="do_test_fieldArithmetic(80);"><p>
@@ -113,8 +119,15 @@ document.votingtest.pointmultOEF.value =testpointmultOEF(tt);
     </tr>
     </tbody>
     </table>
-    <br><br>
-Elliptic Curves Arithmetic (times in microseconds)<br><br>
+    <br>
+
+    <ul>
+    <li>Prime field operations use <i>p</i>=2^224 + 2^140 + 2^56 + 1. </li>
+    <li>Binary field operations are in Z_2^233 and use reduction modulo the polynomial <i>z</i>^233+<i>z</i>^74+1. </li>
+    <li>OEF operations are in Z_{<i>p</i>^<i>m</i>} where <i>p</i> = 2^24 - 75 and <i>m</i> = 9, and we use reduction modulo the polynomial <i>z</i>^10 - 2.</li>
+    </ul>
+
+<h2>Elliptic Curves Arithmetic (times in microseconds)</h2>
     <input type="button" value="test (short)" onClick="do_test_ECArithmetic(10);">
     <input type="button" value="test (long)" onClick="do_test_ECArithmetic(50);">
     <input type="button" value="test (very long)" onClick="do_test_ECArithmetic(100);"><p>
@@ -145,6 +158,10 @@ Elliptic Curves Arithmetic (times in microseconds)<br><br>
     </tr>
     </tbody>
     </table>
+
+    <ul>
+    <li>Our prime field curve is <i>y</i>^2 = <i>x</i>^3 - 3<i>x</i> + <i>b</i> with <i>b</i>=13675174559945691270660091572714686899958220410447750995672981802966. </li>
+    </ul>
 
 
 <tr>
